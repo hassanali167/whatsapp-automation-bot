@@ -1,24 +1,29 @@
-#This code will send bulk messages to a WhatsApp contact or group using Python and PyAutoGUI.
-
 import pyautogui
 import time
 
-def send_whatsapp_messages(message, count):
-    # Delay to switch to WhatsApp Desktop
-    print("You have 5 seconds to open WhatsApp and select the chat...")
-    time.sleep(5)
+def send_bulk_messages(message, count, delay=0.2):
+    """
+    Sends bulk messages to an open WhatsApp chat.
+    
+    :param message: The message to send.
+    :param count: Number of times to send the message.
+    :param delay: Delay between messages to avoid spamming.
+    """
+    try:
+        input("🔔 Switch to the WhatsApp chat window and press Enter to continue...")
 
-    for i in range(count):
-        # Type the message
-        pyautogui.typewrite(message)
-        
-        # Press "Enter" to send
-        pyautogui.press('enter')
-        
-        # Small delay between messages to avoid overwhelming the app
-        time.sleep(0.2)
-        
-    print(f"{count} messages sent successfully!")
+        for i in range(count):
+            pyautogui.typewrite(message)  # Type the message
+            pyautogui.press('enter')  # Send message
+            time.sleep(delay)  # Avoid overwhelming the app
 
-# Example usage
-send_whatsapp_messages("Hello! How are you???? 🚀", 5)
+        print(f"✅ {count} messages sent successfully!")
+
+    except Exception as e:
+        print(f"❌ Error: {e}")
+
+# Example Usage
+if __name__ == "__main__":
+    message = input("Enter the message to send: ")
+    count = int(input("Enter the number of times to send the message: "))
+    send_bulk_messages(message, count)
